@@ -1,0 +1,117 @@
+@charset "utf-8";
+body,ol,ul,p,th,td,dl,dd,form,fieldset,legend,input,textarea,select,h1,h2,h3,h4,h5,h6{ margin:0; padding:0; font-weight: normal;}
+body{ font:12px "Microsoft YaHei","SimSun","Arial Narrow",HELVETICA;  -webkit-text-size-adjust:100%;color:#666; background-color: #1F1F1F; min-width: 320px;}
+textarea{ resize:none;outline:none;}
+a{ color:#666; text-decoration:none;}
+a:hover{ color:#666; text-decoration:none;}
+a:focus{ text-decoration:none;}
+em{ font-style:normal;}
+li{ list-style:none;}
+img{ display:block; _display:inline; border:0; vertical-align:middle;}
+table{ border-collapse:collapse; border-spacing:0;}
+p{ word-wrap:break-word;}
+input,button{ margin:0; padding:0; outline:none; border: none;}
+
+//base.scss
+$bg:red;
+.bg{ background-color: $bg;}
+
+$fz:100px;
+.ot{ font-size: $fz;}
+
+
+//base.scss
+$defaultSize:12px !default;
+$base-color: #333 !default;
+$imgUrl:"../img/";
+$main-color:#FFD600 !default;
+$white:#fff !default;
+$gray:#e5e5e5 !default;
+$font-weight:700;
+$txt-lineHight:1.2 !default;
+$fl:left !default;
+$fr:right !default;
+$max-width:640px;
+$min-width:320px;
+$baseFontSize: 100px !default;
+@function pxToRem($px) {
+  @return $px / $baseFontSize * 1rem;
+}
+@function remToPx($rem) {
+  @return $baseFontSize * $rem / 1rem;
+}
+%circle{ border-radius: 50%;}
+%ovrd{ overflow: hidden;}
+%m0a{ margin: 0 auto;}
+%widHig{ width: 100%; height: 100%;}
+%ellipsis{overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+%pseudo{ content: ""; display: inline-block; vertical-align: middle;}
+%maxWidth{ max-width:$max-width;}
+%clearfix {
+  &:before, &:after { content: ''; display: table; }
+  &:after { clear: both; *zoom: 1; }
+}
+%fixedTop{ position: fixed; left: auto; top: 0; right: auto; bottom: auto; z-index: 88; @extend %maxWidth;}
+%fixedBottom{ position: fixed; left: auto; bottom: 0; right: auto; top: auto; z-index: 88; width: 100%; @extend %maxWidth;}
+@mixin bgPara(){ background-repeat: no-repeat; background-size: cover; }
+@mixin displayFlex(){ display: flex; display: -webkit-box; display: -ms-flexbox; }
+@mixin flex(){ flex:1; -webkit-box-flex:1;  -ms-flex:1; }
+@mixin lineHig($hig){ height: $hig; line-height: $hig;}
+@mixin box-sizing(){ box-sizing: border-box; }
+@mixin ellipsis($v...) {
+  $l: length($v);
+  overflow: hidden; text-overflow: ellipsis;
+  @if ($l == 0) {
+    white-space: nowrap; line-height: $txt-lineHight;
+  } @else if ($l == 1) {
+    display: -webkit-box; -webkit-line-clamp: $v; -webkit-box-orient: vertical;
+  }
+}
+@mixin transition($transition...){
+  transition:$transition;  -webkit-transition:$transition;  -moz-transition:$transition;
+  -ms-transition:$transition; -o-transition:$transition;
+}
+@mixin transform($transform...){
+  transform:$transform;  -webkit-transform:$transform;  -moz-transform:$transform;
+  -ms-transform:$transform;  -o-transform:$transform;
+}
+%translateXY{ position:absolute; left: 50%; top: 50%; @include transform(translate(-50%,-50%)); }
+%translateX{ position:absolute; left: 50%; top: auto; @include transform(translate(-50%,0)); }
+%translateY{ position:absolute; left: auto; top: 50%; @include transform(translate(0,-50%)); }
+@mixin animation($animation...){
+  animation:$animation;  -webkit-animation:$animation;  -moz-animation:$animation;
+  -ms-animation:$animation;  -o-animation:$animation;
+}
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow:$shadow;  -moz-box-shadow:$shadow; box-shadow:$shadow;
+}
+
+@mixin borderB-line($border-B:1px solid #f2f2f2){
+  border-bottom:$border-B;
+}
+@mixin max-screen($res){
+  @media only screen and ( max-width: $res )
+  {
+    @content;
+  }
+}
+@mixin min-screen($res){
+  @media only screen and ( min-width: $res )
+  {
+    @content;
+  }
+}
