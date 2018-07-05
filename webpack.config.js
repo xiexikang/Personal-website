@@ -17,6 +17,7 @@ module.exports = {
             template:'index.html'
         }),
 
+        //自动清除dist文件夹
         new CleanWebpackPlugin(['dist']),
 
         //热更新

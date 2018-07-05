@@ -24,22 +24,25 @@ let loadingImg = require('./src/common/img/loading.gif'),
     _s7 =  require('./src/common/img/s7.png'),
     _s8 =  require('./src/common/img/s8.png'),
     _s9 =  require('./src/common/img/s9.png'),
-    _img0 = require('./src/common/img/shequ.jpg'),
     _img1 = require('./src/common/img/hitui-pc.jpg'),
-    _img2 = require('./src/common/img/tuliao-pc.jpg'),
-    _img3 = require('./src/common/img/bjfz-pc.jpg'),
-    _img4 = require('./src/common/img/ylm-pc.jpg'),
-    _img5 = require('./src/common/img/yingnuo-pc.jpg'),
-    _img6 = require('./src/common/img/bjfz-wap.jpg'),
-    _img7 = require('./src/common/img/cp-wap.jpg'),
-    _img8 = require('./src/common/img/qhsh-wap.jpg'),
-    _img9 = require('./src/common/img/tuliao-wap.jpg'),
-    _img10 = require('./src/common/img/zyjcb-wap.jpg'),
-    _img11 = require('./src/common/img/hitui-wap.jpg'),
-    _img12 = require('./src/common/img/wx-hjdgs.jpg'),
-    _img13 = require('./src/common/img/wx-fcmp.jpg'),
-    _img14 = require('./src/common/img/wx-hthdzx.jpg'),
-    _img15 = require('./src/common/img/wx-hitui.jpg');
+    _img2 = require('./src/common/img/hst-pc.jpg'),
+    _img3 = require('./src/common/img/tuliao-pc.jpg'),
+    _img4 = require('./src/common/img/bjfz-pc.jpg'),
+    _img5 = require('./src/common/img/ylm-pc.jpg'),
+    _img6 = require('./src/common/img/yingnuo-pc.jpg'),
+    _img7 = require('./src/common/img/oa-wap.jpg'),
+    _img8 = require('./src/common/img/shequ-wap.jpg'),
+    _img9 = require('./src/common/img/bjfz-wap.jpg'),
+    _img10 = require('./src/common/img/cp-wap.jpg'),
+    _img11 = require('./src/common/img/qhsh-wap.jpg'),
+    _img12 = require('./src/common/img/tuliao-wap.jpg'),
+    _img13 = require('./src/common/img/zyjcb-wap.jpg'),
+    _img14 = require('./src/common/img/hitui-wap.jpg'),
+    _img15 = require('./src/common/img/wx-hjdgs.jpg'),
+    _img16 = require('./src/common/img/wx-fcmp.jpg'),
+    _img17 = require('./src/common/img/wx-hthdzx.jpg'),
+    _img18 = require('./src/common/img/wx-hitui.jpg'),
+    _img19 = require('./src/common/img/wx-htjyh.jpg');
 
 // -----------------------方法层----------------------------
 window.onload= function() {
@@ -388,118 +391,143 @@ ReactDOM.render(
 // 作品：
 const works = [
         {
-            "id":0,
-            "imgs":_img0,
-            "title":"wap:社群管理",
-            "text":"嗨推学院旗下产品手机版社群管理，专职提高给微信群，微信用户提高数据的采集，配合社群后台管理一起应用，引流加粉推广等服务平台。",
-            "link":"http://sq.hitui.cn/"
-        },
-        {
             "id":1,
             "imgs":_img1,
-            "title":"pc-wap:嗨推学院",
+            "title":"pc:嗨推学院",
             "text":"嗨推学院，专注淘宝客推广，淘宝客教程，淘宝客程序，销售视频教程与学习方法，为广大卖家以及淘宝客提供淘宝推广学习交流平台网站。",
             "link":"http://xue.hitui.com/"
         },
         {
             "id":2,
             "imgs":_img2,
+            "title":"pc:华诗图",
+            "text":"华诗图一直致力于软件定制研发事业，深度挖掘用户需求.集计算机软件，app应用，手机软件的开发于一体，为客户提供专业客户端软件技术支持。",
+            "link":"http://www.mdkg.net/"
+        },
+        {
+            "id":3,
+            "imgs":_img3,
             "title":"pc:涂料经销商联盟",
             "text":"涂料经销商联盟，专注服务于涂料行业经销商，以帮助企业构建出一个商务人脉圈，优化和补充销售渠道的目的，社交加电商模式的平台网站。",
             "link":"http://www.ccda360.com"
         },
         {
-            "id":3,
-            "imgs":_img3,
+            "id":4,
+            "imgs":_img4,
             "title":"pc:北江纺织商城",
             "text":"韶关北江纺织，是一家面料展示平台,是业界领先的牛仔面料生产厂家,专业生产各种优质牛仔面料,各类中高档牛仔面料批发分销的电商平台网站。",
             "link":"http://www.textileapps.com"
         },
         {
-            "id":4,
-            "imgs":_img4,
+            "id":5,
+            "imgs":_img5,
             "title":"pc:印了吗商城",
             "text":"印了吗商城，是一家照片冲印定制，相册模版编辑，提供各式相册、台历等照片产品的网上冲印和相册模版个性定制服务的B2C电商平台网站。",
             "link":"javascript:;"
         },
         {
-            "id":5,
-            "imgs":_img5,
+            "id":6,
+            "imgs":_img6,
             "title":"pc:英诺公司官网",
             "text":"英诺科技，是一家提供高品质移动应用解决方案的提供商，专注于移动互联网APP开发，微信开发和提供网络整体解决方案的外包行业企业官网。",
             "link":"http://www.innoo.cn"
         },
         {
-            "id":6,
-            "imgs":_img6,
+            "id":7,
+            "imgs":_img7,
+            "title":"wap:OA分润平台",
+            "text":"嗨推学院旗下项目OA分润平台提供给网络推广者，微信微商团队，团队会员管理，团队收支，会员查询，申请团队的会员等级，享受不同的等级服务。",
+            "link":"http://sq.hitui.cn/"
+        },
+        {
+            "id":8,
+            "imgs":_img8,
+            "title":"wap:社群管理",
+            "text":"嗨推学院旗下产品手机版社群管理，专职提高给微信群，微信用户提高数据的采集，配合社群后台管理一起应用，引流加粉推广等服务平台。",
+            "link":"http://sq.hitui.cn/"
+        },
+        {
+            "id":9,
+            "imgs":_img9,
             "title":"wap:北江纺织微商城",
             "text":"微信公众号“北江纺织”，同步PC端网站，是业界领先的牛仔面料生产厂家，专业牛仔面料批发，各种牛仔面料优质供应商的电子商务微商城。",
             "link":"javascript:;"
         },
         {
-            "id":7,
-            "imgs":_img7,
+            "id":10,
+            "imgs":_img10,
             "title":"wap:采批文具商城",
             "text":"采批文具商城，负责商品零售批发，专注文具、体育用品批发销售领域，为行业生产商，销售商及相关客户提供质优的商品和便捷使用的微商城。",
-            "link":"http://51recai.com"
+            "link":"http://51recai.com/"
         },
         {
-            "id":8,
-            "imgs":_img8,
+            "id":11,
+            "imgs":_img11,
             "title":"wap:清化商会",
             "text":"微信公众号 “清化商会”，主要是在中国广东韶关市的商人与商人、商人与社会之间相互联系的，增加家乡文化与商业交流的社区资讯微官站。",
             "link":"http://www.cnqhsh.com"
         },
         {
-            "id":9,
-            "imgs":_img9,
+            "id":12,
+            "imgs":_img12,
             "title":"wap:涂料微商城",
             "text":"微信公众号“涂经联新材”，同步涂料经销商PC端网站，以帮助企业构建出一个商务人脉圈，优化和补充销售渠道的目的，社交加电商模式的微商城。",
             "link":"http://www.ccda360.com/wx/index/wxindex.html"
         },
         {
-            "id":10,
-            "imgs":_img10,
+            "id":13,
+            "imgs":_img13,
             "title":"wap:仲意建材报",
             "text":"微信公众号“仲意建材报”，主要以建材网展，展会预定，电子书刊，活动资讯的发布等待，展示介绍此平台的的相关信息的企业资讯微网站。",
             "link":"http://zyjiancaibao.com/weixin/expoon/index.html"
         },
         {
-            "id":11,
-            "imgs":_img11,
+            "id":14,
+            "imgs":_img14,
             "title":"wap:嗨推学院",
             "text":"微信公众号“嗨推学院”,专注淘宝客推广，淘宝客教程，淘宝客程序，销售视频教程与学习方法，为广大卖家以及淘宝客提供淘宝推广学习交流平台网站。",
             "link":"http://xue.hitui.com/Mobile/Index/index.html"
         },
         {
-            "id":12,
-            "imgs":_img12,
+            "id":15,
+            "imgs":_img15,
             "title":"小程序:喝酒的故事",
             "text":"微信小程序：喝酒的故事，嗨推公司开发，提供给贵州知酒堂公司，与酒会友，分享自己与酒的点滴故事，不定期举行活动，送正宗贵州茅台酒哦。",
             "link":"javascript:;"
         },
         {
-            "id":13,
-            "imgs":_img13,
+            "id":16,
+            "imgs":_img16,
             "title":"小程序:发财名片",
             "text":"微信小程序：发财名片，嗨推旗下的小程序，提供给企业/个人的名片，名片大全，名片资源，发财名片还有额外收益，加入战队，边推广边赚钱。",
             "link":"javascript:;"
         },
         {
-            "id":14,
-            "imgs":_img14,
+            "id":17,
+            "imgs":_img17,
             "title":"小程序:嗨推活动中心",
             "text":"微信小程序：嗨推活动中心，嗨推旗下的小程序，活动中心：新媒体推广，淘宝客培训，微商培训，推广课程视频，推广总监班学习课程等等。",
             "link":"javascript:;"
         },
         {
-            "id":15,
-            "imgs":_img15,
+            "id":18,
+            "imgs":_img18,
             "title":"小程序:嗨推学院",
             "text":"微信小程序：嗨推学院，学推广，到嗨推，让网络推广变得更简单，专注淘宝客推广，淘宝客教程，为广大淘宝客提供淘宝推广学习交流平台网站。",
             "link":"javascript:;"
+        },
+        {
+            "id":19,
+            "imgs":_img19,
+            "title":"小程序:嗨推精英会",
+            "text":"微信小程序：推广精英大咖线下分享，大房间小房间知识操作讨论，共享互利，一一解答问题，实地培训，一起玩转流量，最大化变现等等。",
+            "link":"javascript:;"
         }
     ];
+
+//倒序排序reverse()
+// works.reverse();
+
 class Works extends React.Component{
     render(){
         return(
