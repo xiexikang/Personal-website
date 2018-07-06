@@ -616,3 +616,32 @@ ReactDOM.render(
 //     document.getElementById('example')
 // );
 
+// 功能：加载完成后显示视图内容
+document.onreadystatechange = subSomething;
+//加载状态为complete时移除loading效果
+function subSomething() {
+
+    if (document.readyState == "uninitialized ") {
+
+        console.log('uninitialized ');
+
+
+
+    } else if (document.readyState == "loading") {
+
+        console.log('loading');
+
+    }else if (document.readyState == "interactive") {
+
+        console.log('interactive');
+
+    } else if(document.readyState=="complete"){
+
+        console.log('complete');
+
+        document.getElementsByTagName('body')[0].classList.add('loaded');
+
+        document.getElementById('website-container').style.display = 'block';
+
+    }
+}
