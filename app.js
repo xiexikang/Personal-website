@@ -6,7 +6,9 @@ import  React from 'react';
 import  ReactDOM from 'react-dom';
 import $ from 'jquery';
 // import Vue from 'vue';
+import Vue from 'vue/dist/vue.esm.js'
 import axios from 'axios';
+import VueLazyload from 'vue-lazyload';
 import 'font-awesome/css/font-awesome.css';
 import './src/common/style/base.scss';
 import './src/common/style/sass.scss';
@@ -38,13 +40,20 @@ let loadingImg = require('./src/common/img/loading.gif'),
     _img12 = require('./src/common/img/tuliao-wap.jpg'),
     _img13 = require('./src/common/img/zyjcb-wap.jpg'),
     _img14 = require('./src/common/img/hitui-wap.jpg'),
-    _img15 = require('./src/common/img/wx-hjdgs.jpg'),
-    _img16 = require('./src/common/img/wx-fcmp.jpg'),
-    _img17 = require('./src/common/img/wx-hthdzx.jpg'),
+    _img15 = require('./src/common/img/dymh-wap.jpg'),
+    _img16 = require('./src/common/img/wx-hjdgs.jpg'),
+    _img17 = require('./src/common/img/wx-fcmp.jpg'),
     _img18 = require('./src/common/img/wx-hitui.jpg'),
-    _img19 = require('./src/common/img/wx-htjyh.jpg');
+    _img19 = require('./src/common/img/wx-htjyh.jpg'),
+    _img20 = require('./src/common/img/xcx-bbll.jpg'),
+    _img21 = require('./src/common/img/xcx-xklx.jpg');
 
 // -----------------------方法层----------------------------
+//json字符串处理
+function parseData(d) {
+    return typeof(d) == 'string' ? JSON.parse(d) : d;
+}
+
 window.onload= function() {
 
     // loadImg.js
@@ -94,13 +103,13 @@ window.onload= function() {
 
     // banner.js
     banner:{
-        let box  = document.getElementById("my-banner");  //   获得大盒子
-        let ul = box.children[0].children[0];  // 获取ul
 
-        let ulLis = ul.children;  //  ul 里面的所有  li
-        // 复习：  cloneNode()     克隆节点       追加a.appendChild(b)  把b 放到a 的最后面
-        //1.  ulLis[0].cloneNode(true)  克隆  节点
-        ul.appendChild(ulLis[0].cloneNode(true));   // ul 是 a   ulLis[0].cloneNode(true) 是b
+        let box  = document.getElementById("my-banner");
+        let ul = box.children[0].children[0];
+
+        let ulLis = ul.children;
+
+        ul.appendChild(ulLis[0].cloneNode(true));
 
         //窗口可视范围全屏
         $(window).on('resize', function () {
@@ -110,81 +119,74 @@ window.onload= function() {
             $('#ul').width(ulWid);
         }).trigger('resize')
 
-        // ul.style.width = ulWid;
-        // console.log(ul.style.width);
+        let ol = box.children[1].children[0];
 
-        //2. 插入 ol 里面的li
-        let ol = box.children[1].children[0];  // 获得ol
-        // 因为 我们要创建很多个 ol 里面的li 所以需要用到for 循环哦
-        for(let i=0;i<ulLis.length-1;i++) {   // ul 里面的li  长度 要减去 1  因为我们克隆一个
-            // 创建节点 li
+        for(let i=0;i<ulLis.length-1;i++) {
+
             let li = document.createElement("li");
-            li.innerHTML = i + 1;   //  存在加1 的关系
-            // a.appendChild(b);
+            li.innerHTML = i + 1;
             ol.appendChild(li);
         }
-        let olLis = ol.children;  // 找到 ol 里面的li
+        let olLis = ol.children;
         olLis[0].className = 'cur';
-        // 3. 动画部分  遍历小li ol
+
         for(let i=0;i<olLis.length;i++) {
-            olLis[i].index = i;  // 赋予索引号
+            olLis[i].index = i;
             olLis[i].onmouseover = function() {
-                // 清除所有人
                 for(var j=0;j<olLis.length;j++) {
                     olLis[j].className = "";
                 }
                 this.className = 'cur';
+
                 animate(ul,-this.index*ulLis[0].offsetWidth);
-                key = square = this.index; // 鼠标经过 key square 要等于 当前的索引号
+
+                key = square = this.index;
             }
         }
-        // 4. 定时器部分  难点
-        let timer = null;  // 定时器
-        let key = 0; // 用来控制图片的播放的
-        let square = 0;  // 用来控制小方块的
-        timer = setInterval(autoplay,4000);   // 每隔4s 调用一次 autoplay
+
+        let timer = null,
+            key = 0,
+            square = 0;
+
+        timer = setInterval(autoplay,4000);
+
         function autoplay() {
-            key++;   // key == 1  先 ++
-            //console.log(key); //  不能超过5
-            if(key > ulLis.length - 1)
-            {
-                // alert('停下');
+            key++;
+            if(key > ulLis.length - 1) {
+
                 ul.style.left = 0;
-                key = 1;  // 因为第6张就是第一张，我们已经播放完毕了， 下一次播放第2张
-                // 第2张的索引号是1
+                key = 1;
             }
+
             animate(ul,-key*ulLis[0].offsetWidth);
-            // 小方块的做法
-            square++;  // 小方块自加1
+
+            square++;
             square = square>olLis.length-1 ? 0 : square;
-            /// 清除所有人
+
             for(let i=0;i<olLis.length;i++) {
                 olLis[i].className = "";
             }
-            olLis[square].className = "cur";   // 留下当前自己的
+            olLis[square].className = "cur";
         }
 
-        // 鼠标经过和停止定时器
         box.onmouseover = function() {
             clearInterval(timer);
         }
 
         box.onmouseout = function() {
-            timer = setInterval(autoplay,4000);  // 一定这么开
+            timer = setInterval(autoplay,4000);
         }
 
         //  基本封装
         function animate(obj,target) {
-            clearInterval(obj.timer);  // 要开启定时器，先清除以前定时器
-            // 有2个参数 第一个 对象谁做动画  第二 距离 到哪里
-            // 如果 offsetLeft 大于了  target 目标位置就应该反方向
+            clearInterval(obj.timer);
             let speed = obj.offsetLeft < target ? 15 : -15;
             obj.timer = setInterval(function() {
-                var result = target - obj.offsetLeft;  //  他们的值 等于 0 说明完全相等
+                var result = target - obj.offsetLeft;
                 // 动画的原理
                 obj.style.left = obj.offsetLeft + speed  + "px";
                 if(Math.abs(result) <= 15) {
-                    obj.style.left = target + "px";   //抖动问题
+                    obj.style.left = target + "px";
                     clearInterval(obj.timer);
                 }
             },10);
@@ -305,6 +307,10 @@ class Banner extends React.Component{
                         <div className="col-xs-12">
                             <div className="wel"><h2>Hello</h2></div>
                             <h3 className="">Welcome to my website</h3>
+
+                            {/*<canvas id="buffer"></canvas>*/}
+                            {/*<canvas id="canvas"></canvas>*/}
+
                         </div>
                     </div>
                 </div>
@@ -388,184 +394,242 @@ ReactDOM.render(
 );
 
 
+import worksJson from './src/common/json/works.json'
+// console.log(worksJson)
+
 // 作品：
 const works = [
         {
-            "id":1,
+            "id":"1001",
             "imgs":_img1,
-            "title":"pc:嗨推学院",
+            "title":"嗨推学院",
             "text":"嗨推学院，专注淘宝客推广，淘宝客教程，淘宝客程序，销售视频教程与学习方法，为广大卖家以及淘宝客提供淘宝推广学习交流平台网站。",
-            "link":"http://xue.hitui.com/"
+            "link":"http://xue.hitui.com/",
+            "type":"pc"
         },
         {
-            "id":2,
+            "id":"1002",
             "imgs":_img2,
-            "title":"pc:华诗图",
+            "title":"华诗图官网",
             "text":"华诗图一直致力于软件定制研发事业，深度挖掘用户需求.集计算机软件，app应用，手机软件的开发于一体，为客户提供专业客户端软件技术支持。",
-            "link":"http://www.mdkg.net/"
+            "link":"http://www.mdkg.net/",
+            "type":"pc"
         },
         {
-            "id":3,
+            "id":"1003",
             "imgs":_img3,
-            "title":"pc:涂料经销商联盟",
+            "title":"涂料经销商联盟",
             "text":"涂料经销商联盟，专注服务于涂料行业经销商，以帮助企业构建出一个商务人脉圈，优化和补充销售渠道的目的，社交加电商模式的平台网站。",
-            "link":"http://www.ccda360.com"
+            "link":"http://www.ccda360.com",
+            "type":"pc"
         },
         {
-            "id":4,
+            "id":"1004",
             "imgs":_img4,
-            "title":"pc:北江纺织商城",
+            "title":"北江纺织商城",
             "text":"韶关北江纺织，是一家面料展示平台,是业界领先的牛仔面料生产厂家,专业生产各种优质牛仔面料,各类中高档牛仔面料批发分销的电商平台网站。",
-            "link":"http://www.textileapps.com"
+            "link":"http://www.textileapps.com",
+            "type":"pc"
         },
         {
-            "id":5,
+            "id":"1005",
             "imgs":_img5,
-            "title":"pc:印了吗商城",
+            "title":"印了吗商城",
             "text":"印了吗商城，是一家照片冲印定制，相册模版编辑，提供各式相册、台历等照片产品的网上冲印和相册模版个性定制服务的B2C电商平台网站。",
-            "link":"javascript:;"
+            "link":"javascript:;",
+            "type":"pc"
         },
         {
-            "id":6,
+            "id":"1006",
             "imgs":_img6,
-            "title":"pc:英诺公司官网",
+            "title":"英诺公司官网",
             "text":"英诺科技，是一家提供高品质移动应用解决方案的提供商，专注于移动互联网APP开发，微信开发和提供网络整体解决方案的外包行业企业官网。",
-            "link":"http://www.innoo.cn"
+            "link":"http://www.innoo.cn",
+            "type":"pc"
         },
         {
-            "id":7,
+            "id":"1007",
             "imgs":_img7,
-            "title":"wap:OA分润平台",
-            "text":"嗨推学院旗下项目OA分润平台提供给网络推广者，微信微商团队，团队会员管理，团队收支，会员查询，申请团队的会员等级，享受不同的等级服务。",
-            "link":"http://sq.hitui.cn/"
+            "title":"oa分润平台",
+            "text":"嗨推学院旗下项目oa分润平台提供给网络推广者，微信微商团队，团队会员管理，团队收支，会员查询，申请团队的会员等级，享受不同的等级服务。",
+            "link":"http://sq.hitui.cn/",
+            "type":"wap"
         },
         {
-            "id":8,
+            "id":"1008",
             "imgs":_img8,
-            "title":"wap:社群管理",
+            "title":"社群管理",
             "text":"嗨推学院旗下产品手机版社群管理，专职提高给微信群，微信用户提高数据的采集，配合社群后台管理一起应用，引流加粉推广等服务平台。",
-            "link":"http://sq.hitui.cn/"
+            "link":"http://sq.hitui.cn/",
+            "type":"wap"
         },
         {
-            "id":9,
+            "id":"1009",
             "imgs":_img9,
-            "title":"wap:北江纺织微商城",
+            "title":"北江纺织微商城",
             "text":"微信公众号“北江纺织”，同步PC端网站，是业界领先的牛仔面料生产厂家，专业牛仔面料批发，各种牛仔面料优质供应商的电子商务微商城。",
-            "link":"javascript:;"
+            "link":"javascript:;",
+            "type":"wap"
         },
         {
-            "id":10,
+            "id":"1010",
             "imgs":_img10,
-            "title":"wap:采批文具商城",
+            "title":"采批文具商城",
             "text":"采批文具商城，负责商品零售批发，专注文具、体育用品批发销售领域，为行业生产商，销售商及相关客户提供质优的商品和便捷使用的微商城。",
-            "link":"http://51recai.com/"
+            "link":"http://51recai.com/",
+            "type":"wap"
         },
         {
-            "id":11,
+            "id":"1011",
             "imgs":_img11,
-            "title":"wap:清化商会",
+            "title":"清化商会",
             "text":"微信公众号 “清化商会”，主要是在中国广东韶关市的商人与商人、商人与社会之间相互联系的，增加家乡文化与商业交流的社区资讯微官站。",
-            "link":"http://www.cnqhsh.com"
+            "link":"http://www.cnqhsh.com",
+            "type":"wap"
         },
         {
-            "id":12,
+            "id":"1012",
             "imgs":_img12,
-            "title":"wap:涂料微商城",
+            "title":"涂料微商城",
             "text":"微信公众号“涂经联新材”，同步涂料经销商PC端网站，以帮助企业构建出一个商务人脉圈，优化和补充销售渠道的目的，社交加电商模式的微商城。",
-            "link":"http://www.ccda360.com/wx/index/wxindex.html"
+            "link":"http://www.ccda360.com/wx/index/wxindex.html",
+            "type":"wap"
         },
         {
-            "id":13,
+            "id":"1013",
             "imgs":_img13,
-            "title":"wap:仲意建材报",
+            "title":"仲意建材报",
             "text":"微信公众号“仲意建材报”，主要以建材网展，展会预定，电子书刊，活动资讯的发布等待，展示介绍此平台的的相关信息的企业资讯微网站。",
-            "link":"http://zyjiancaibao.com/weixin/expoon/index.html"
+            "link":"http://zyjiancaibao.com/weixin/expoon/index.html",
+            "type":"wap"
         },
         {
-            "id":14,
+            "id":"1014",
             "imgs":_img14,
-            "title":"wap:嗨推学院",
+            "title":"嗨推学院",
             "text":"微信公众号“嗨推学院”,专注淘宝客推广，淘宝客教程，淘宝客程序，销售视频教程与学习方法，为广大卖家以及淘宝客提供淘宝推广学习交流平台网站。",
-            "link":"http://xue.hitui.com/Mobile/Index/index.html"
+            "link":"http://xue.hitui.com/Mobile/Index/index.html",
+            "type":"wap"
         },
         {
-            "id":15,
+            "id":"1015",
             "imgs":_img15,
-            "title":"小程序:喝酒的故事",
-            "text":"微信小程序：喝酒的故事，嗨推公司开发，提供给贵州知酒堂公司，与酒会友，分享自己与酒的点滴故事，不定期举行活动，送正宗贵州茅台酒哦。",
-            "link":"javascript:;"
+            "title":"抖音卖货",
+            "text":"抖音卖货,专注网店商家与推广者/淘宝客的业务对接，商家上架发布商品，淘客承接订单任务进行抖音-快手-微博等平台进行推广的服务平台网站。",
+            "link":"javascript:;",
+            "type":"wap"
         },
         {
-            "id":16,
+            "id":"1016",
             "imgs":_img16,
-            "title":"小程序:发财名片",
-            "text":"微信小程序：发财名片，嗨推旗下的小程序，提供给企业/个人的名片，名片大全，名片资源，发财名片还有额外收益，加入战队，边推广边赚钱。",
-            "link":"javascript:;"
+            "title":"喝酒的故事",
+            "text":"微信小程序：喝酒的故事，嗨推公司开发，提供给贵州知酒堂公司，与酒会友，分享自己与酒的点滴故事，不定期举行活动，送正宗贵州茅台酒哦。",
+            "link":"javascript:;",
+            "type":"xcx"
         },
         {
-            "id":17,
+            "id":"1016",
             "imgs":_img17,
-            "title":"小程序:嗨推活动中心",
-            "text":"微信小程序：嗨推活动中心，嗨推旗下的小程序，活动中心：新媒体推广，淘宝客培训，微商培训，推广课程视频，推广总监班学习课程等等。",
-            "link":"javascript:;"
+            "title":"发财名片",
+            "text":"微信小程序：发财名片，嗨推旗下的小程序，提供给企业/个人的名片，名片大全，名片资源，发财名片还有额外收益，加入战队，边推广边赚钱。",
+            "link":"javascript:;",
+            "type":"xcx"
         },
         {
-            "id":18,
+            "id":"1018",
             "imgs":_img18,
-            "title":"小程序:嗨推学院",
+            "title":"嗨推学院",
             "text":"微信小程序：嗨推学院，学推广，到嗨推，让网络推广变得更简单，专注淘宝客推广，淘宝客教程，为广大淘宝客提供淘宝推广学习交流平台网站。",
-            "link":"javascript:;"
+            "link":"javascript:;",
+            "type":"xcx"
         },
         {
-            "id":19,
+            "id":"1019",
             "imgs":_img19,
-            "title":"小程序:嗨推精英会",
+            "title":"嗨推精英会",
             "text":"微信小程序：推广精英大咖线下分享，大房间小房间知识操作讨论，共享互利，一一解答问题，实地培训，一起玩转流量，最大化变现等等。",
-            "link":"javascript:;"
+            "link":"javascript:;",
+            "type":"xcx"
+        },
+        {
+            "id":"1020",
+            "imgs":_img20,
+            "title":"波波来了",
+            "text":"波波来了，讲师录制好的音频与视频挂载在平台上，提供给学员们进行线上购买并学习，还有一些行业大佬的分享及相关的资讯文章。",
+            "link":"javascript:;",
+            "type":"xcx"
+        },
+        {
+            "id":"1021",
+            "imgs":_img21,
+            "title":"小K旅行",
+            "text":"小K旅行，游客分享自己每次的旅行心得，图文-视频的游记，share自己跟亲朋好友的好去处，发现美好的事物，指定旅行的计划和相关攻略。",
+            "link":"javascript:;",
+            "type":"xcx"
         }
     ];
 
+//作品集
+const VueWork = new Vue({
+    el:'#vue-workList',
+    data(){
+        return{
+            workList:[], //作品列表
+        }
+    },
+    created(){
+        this.getWorkJson();
+    },
+    methods:{
+        getWorkJson(){
+            this.workList = works;
+            Vue.use(VueLazyload, {
+                loading:loadingImg
+            })
+        }
+    }
+})
+
+
 //倒序排序reverse()
 // works.reverse();
-
-class Works extends React.Component{
-    render(){
-        return(
-            <div>
-                {
-                    works.map(function (v,key) {
-                        return <div className="item col-sm-6 col-md-4 col-lg-3" key={key}>
-                            <div className="thumbnail">
-                                <a href={v.link} title={v.title} target="_blank">
-                                    <img src={loadingImg} data-src={v.imgs} width="300" height="300" alt="" className="lazy-img" />
-                                </a>
-                                <div className="caption">
-                                    <h3><a href={v.link} title={v.title} target="_blank">{v.title}</a></h3>
-                                    <p>{v.text}</p>
-                                </div>
-                            </div>
-                        </div>
-                    })
-                }
-            </div>
-        )
-    }
-}
-ReactDOM.render(
-    <Works/>,
-    document.getElementById("works-app")
-)
+//
+// class Works extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                 {
+//                     works.map(function (v,key) {
+//                         return <div className="item col-sm-6 col-md-4 col-lg-3" key={key}>
+//                             <div className="thumbnail">
+//                                 <a href={v.link} title={v.title} target="_blank">
+//                                     <img src={loadingImg} data-src={v.imgs} width="300" height="300" alt="" className="lazy-img" />
+//                                 </a>
+//                                 <div className="caption">
+//                                     <h3><a href={v.link} title={v.title} target="_blank">{v.title}</a></h3>
+//                                     <p>{v.text}</p>
+//                                 </div>
+//                             </div>
+//                         </div>
+//                     })
+//                 }
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(
+//     <Works/>,
+//     document.getElementById("works-app")
+// )
 
 // ----------------------------------------------------------------------------------------------
 
-// 作品集：(功能没问题，只是不够优化：json获取到图片打包问题；先使用上面的静态方法)
-// function parseData(d) {
-//     //json字符串处理
-//     return typeof(d) == 'string' ? JSON.parse(d) : d;
-// }
+// 作品集：(功能没问题，只是不够优化：json获取不到图片打包问题；先使用上面的静态方法)
+
 // const worksUrl = 'https://xiexikang.github.io/src/common/json/works.json';
-//
-// class Works extends React.Component {
+//  const worksUrl = require('./src/common/json/works.json');
+
+// class Works2 extends React.Component {
 //     constructor(props) {
 //         super(props);
 //         this.state = {
@@ -612,7 +676,7 @@ ReactDOM.render(
 //     }
 // }
 //  ReactDOM.render(
-//     <Works />,
+//     <Works2 />,
 //     document.getElementById('example')
 // );
 
@@ -620,12 +684,9 @@ ReactDOM.render(
 document.onreadystatechange = subSomething;
 //加载状态为complete时移除loading效果
 function subSomething() {
-
     if (document.readyState == "uninitialized ") {
 
         console.log('uninitialized ');
-
-
 
     } else if (document.readyState == "loading") {
 
@@ -645,3 +706,173 @@ function subSomething() {
 
     }
 }
+
+
+
+// canvas展示欢迎语
+function showWelCanvas(){
+    let rid = null,
+        frames = 0,
+        index = 0,
+        fontSize = 70;
+
+    let lines = [],
+        points = [];
+
+    let showSpeed = 11;
+
+    const ctx = canvas.getContext("2d"),
+        btx = buffer.getContext("2d");
+
+    let bw = (buffer.width = fontSize),
+        bh = (buffer.height = fontSize),
+        cw = (canvas.width = window.innerWidth),
+        ch = (canvas.height = 300);
+    btx.fillStyle = ctx.fillStyle = "#fff";
+    btx.font = ctx.font = fontSize + "px Courier New";
+
+    let text = [
+        "Hello everybody",
+        "Wellcome to my home",
+        "The website exhibits",
+        "Some works and skills",
+        "And personal information",
+        "Thanks"
+    ];
+
+    text.map((t, i) => {
+        text[i] = t.toUpperCase();
+    });
+
+    class Line {
+        constructor(text) {
+            this.text = text;
+            this.width = ctx.measureText(this.text).width;
+            this.startingPoint = -this.width / 2;
+            this.letters = [];
+
+            this.lettersRy();
+        }
+
+        lettersRy() {
+            for (let i = 0; i < this.text.length; i++) {
+                let letter = this.text[i];
+                let _start =
+                    this.startingPoint + ctx.measureText(this.text.substring(0, i)).width;
+                let pos = { x: _start, y: (ch - fontSize) / 2 };
+                this.letters.push(new Letter(i, pos, letter));
+            }
+        }
+    }
+
+    class Letter {
+        constructor(i, pos, letter) {
+            this.index = index;
+            this.letter = letter;
+            this.pos = pos;
+            this.points = [];
+            this.addToPointsRy();
+        }
+        addToPointsRy() {
+            btx.clearRect(0, 0, bw, bh);
+            btx.fillText(this.letter, 2, bh - 2);
+            let imgData = btx.getImageData(0, 0, bw, bh);
+            let pixels = imgData.data;
+
+            for (let i = 0; i < pixels.length; i += 4) {
+                if (pixels[i] == 255) {
+                    let x = (0.25 * i) % bw;
+                    let y = ~~(0.25 * i / bw);
+                    this.points.push(new Particle(x + this.pos.x, y + this.pos.y));
+                }
+            }
+        }
+    }
+
+    class Particle {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+            this.pos = { x, y };
+            this.pn = {
+                // positive or negative
+                x: Math.random() > 0.2 ? 1 : -1,
+                y: Math.random() > 0.2 ? -1 : 1
+            };
+            this.vel = {
+                x: this.pn.x * (this.pn.x + Math.random() * 10) / 90,
+                y: this.pn.y * (this.pn.y + Math.random() * 10) / 90,
+                alp: (0.1 + Math.random()) / 60
+            };
+            this.alp = 1;
+        }
+
+        draw() {
+            ctx.fillStyle = "rgba(255,255,0," + this.alp + ")";
+            ctx.beginPath();
+            ctx.fillRect(this.pos.x, this.pos.y, 1, 1);
+        }
+
+        update() {
+            this.pos.x += this.vel.x;
+            this.pos.y += this.vel.y;
+            this.alp -= this.vel.alp;
+        }
+    }
+
+    for (let i = 0; i < text.length; i++) {
+        lines.push(new Line(text[i]));
+    }
+
+    let numLine = 0;
+    let line = lines[numLine];
+
+    ctx.translate(cw / 2, 0);
+    function Frame() {
+        rid = window.requestAnimationFrame(Frame);
+
+        ctx.clearRect(-cw, -ch, 2 * cw, 2 * ch);
+        points.map((p, i) => {
+            p.update();
+            p.draw();
+            if (p.alp <= 0) {
+                points.splice(i, 1);
+            }
+        });
+
+        if (frames % showSpeed == 0) {
+            line.letters[index].points.map(p => {
+                p.pos = { x: p.x, y: p.y };
+                p.alp = 1;
+            });
+            points = points.concat(line.letters[index].points);
+            index++;
+        }
+
+        if (index == line.letters.length) {
+            numLine++;
+            line = lines[numLine % text.length];
+            index = 0;
+            frames = 0;
+        }
+        frames++;
+    }
+
+
+    function Init() {
+        cw = canvas.width = window.innerWidth;
+        ctx.translate(cw / 2, 0);
+        if (rid) {
+            window.cancelAnimationFrame(rid);
+            rid = null;
+        }
+        Frame();
+    }
+
+    setTimeout(function() {
+        Init();
+        window.addEventListener("resize", Init, false);
+    }, 10);
+}
+
+//showWelCanvas();

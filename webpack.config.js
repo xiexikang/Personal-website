@@ -176,6 +176,13 @@ module.exports = {
                 ]
             },
 
+            //json数据
+            {
+                test: /\.json$/,
+                use: 'json-loader'
+            }
+
+
         ],
     },
 
