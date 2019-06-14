@@ -327,39 +327,39 @@ ReactDOM.render(
 const skills = [
     {
         "imgs":_s1,
-        "title":"图标01"
+        "title":"Photoshop"
     },
     {
         "imgs":_s2,
-        "title":"图标02"
+        "title":"Webstorm"
     },
     {
         "imgs":_s3,
-        "title":"图标03"
+        "title":"Fireworks"
     },
     {
         "imgs":_s4,
-        "title":"图标04"
+        "title":"Html5"
     },
     {
         "imgs":_s5,
-        "title":"图标05"
+        "title":"Css3"
     },
     {
         "imgs":_s6,
-        "title":"图标06"
+        "title":"Sass"
     },
     {
         "imgs":_s7,
-        "title":"图标07"
+        "title":"Vue"
     },
     {
         "imgs":_s8,
-        "title":"图标08"
+        "title":"Javascript"
     },
     {
         "imgs":_s9,
-        "title":"图标09"
+        "title":"Jquery"
     },
 ]
 class Skills extends React.Component{
@@ -452,7 +452,7 @@ const works = [
             "imgs":_img7,
             "title":"oa分润平台",
             "text":"嗨推学院旗下项目oa分润平台提供给网络推广者，微信微商团队，团队会员管理，团队收支，会员查询，申请团队的会员等级，享受不同的等级服务。",
-            "link":"http://sq.hitui.cn/",
+            "link":"http://bbll.htr.kim/Mobile/index.html",
             "type":"wap"
         },
         {
@@ -516,7 +516,7 @@ const works = [
             "imgs":_img15,
             "title":"抖音卖货",
             "text":"抖音卖货,专注网店商家与推广者/淘宝客的业务对接，商家上架发布商品，淘客承接订单任务进行抖音-快手-微博等平台进行推广的服务平台网站。",
-            "link":"javascript:;",
+            "link":"http://doutao.htr.kim/",
             "type":"wap"
         },
         {
@@ -555,7 +555,7 @@ const works = [
             "id":"1020",
             "imgs":_img20,
             "title":"波波来了",
-            "text":"波波来了，讲师录制好的音频与视频挂载在平台上，提供给学员们进行线上购买并学习，还有一些行业大佬的分享及相关的资讯文章。",
+            "text":"波波来了，把讲师录制好的音频与视频挂载在平台上，提供给学员们进行线上购买并学习，还有一些行业大佬的分享及相关的资讯文章等等。",
             "link":"javascript:;",
             "type":"xcx"
         },
